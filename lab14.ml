@@ -201,5 +201,5 @@ let not_div_by (n : int) (m : int) : bool =
 
 let rec sieve s =
   let Cons (h, t) = s () in
-  fun () -> Cons (h, sieve (sfilter (not_div_by_h) t)) ;;
+  fun () -> Cons (h, sieve (sfilter (not_div_by h) t)) ;;
 
