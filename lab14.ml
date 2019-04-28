@@ -103,7 +103,7 @@ numbers, and one of the odds.
 ....................................................................*)
 
 let evens = smap (( * ) 2) nats ;;
-let odds = smap (fun x -> x - 1) evens ;;
+let odds = smap (fun x -> x + 1) evens ;;
 
 (* In addition to mapping over streams, we should be able to use all
 the other higher-order list functions you've grown to know and love,
