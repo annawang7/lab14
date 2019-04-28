@@ -124,8 +124,10 @@ filtering the natural numbers for the evens:
 Now define sfilter.
 ....................................................................*)
 
-let rec sfilter f s1 = if (f (head s1)) then (fun () -> Cons (head s1, sfilter f (tail s1)))
-                       else sfilter f (tail s1) ;;
+let rec sfilter f s1 = let h = head s1 in 
+                        let t = tail s1 in
+                        if (f h) then (fun () -> Cons (h, sfilter f t))
+                       else sfilter f t ;;
   
 (*....................................................................
 Exercise 7. Now redefine evens and odds (as evens2 and odds2) using
@@ -197,5 +199,7 @@ useful: *)
 let not_div_by (n : int) (m : int) : bool = 
   not (m mod n = 0) ;;
 
-let rec sieve s = failwith "sieve not implemented" ;;
+let rec sieve s =
+  Cons (h, t) = s () in
+  fun () -> Cons (h, sieve (sfilter (not_div_by_h) t)) ;;
 
