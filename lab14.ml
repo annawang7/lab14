@@ -73,7 +73,7 @@ let threes = smap2 (+) ones twos ;;
 Exercise 3. An infinite stream of natural numbers (0, 1, 2, 3, ...).
 ....................................................................*)
 
-let rec nats = fun () -> Cons (0, smap ((+) 1) nats ;;
+let rec nats = fun () -> Cons (0, smap ((+) 1) nats) ;;
 
 (*....................................................................
 Exercise 4. Create a function zip_stream, which takes two streams and
@@ -91,7 +91,7 @@ twos (2,2,2,2....) would look like this:
 ....................................................................*)
 
 let rec zip_stream s1 s2 =
-  fun () -> Cons (head s1, fun () -> Cons (head s2, zip_stream (tail s1) (tail s2)) ;;
+  fun () -> Cons (head s1, fun () -> Cons (head s2, zip_stream (tail s1) (tail s2))) ;;
 
 (* Now some new examples. For these, you should build them from
 previous streams (ones, twos, threes, nats) by making use of the
@@ -124,7 +124,7 @@ filtering the natural numbers for the evens:
 Now define sfilter.
 ....................................................................*)
 
-let sfilter f s1 = if (f (head s1)) then (fun () -> Cons (s1, f (tail s1)))
+let rec sfilter f s1 = if (f (head s1)) then (fun () -> Cons (s1, f (tail s1)))
                    else sfilter f (tail s1) ;;
   
 (*....................................................................
