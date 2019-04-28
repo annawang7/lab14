@@ -124,8 +124,7 @@ filtering the natural numbers for the evens:
 Now define sfilter.
 ....................................................................*)
 
-let rec sfilter f s1 = let h = head s1 in 
-                        let t = tail s1 in
+let rec sfilter f s1 = let Cons (h, t) = s1 () in
                         if (f h) then (fun () -> Cons (h, sfilter f t))
                        else sfilter f t ;;
   
