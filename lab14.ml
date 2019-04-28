@@ -200,6 +200,6 @@ let not_div_by (n : int) (m : int) : bool =
   not (m mod n = 0) ;;
 
 let rec sieve s =
-  Cons (h, t) = s () in
+  let Cons (h, t) = s () in
   fun () -> Cons (h, sieve (sfilter (not_div_by_h) t)) ;;
 
