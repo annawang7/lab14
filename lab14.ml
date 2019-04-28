@@ -60,20 +60,20 @@ definition is introduced in the skeleton code below. (We'll stop
 mentioning this now, and forevermore.) 
 ....................................................................*)
 
-let twos = fun () -> failwith "twos not implemented" ;;
+let twos = smap ( ( * ) 2) ones ;;
 
 (*....................................................................
 Exercise 2. An infinite stream of threes, built from the ones and
 twos.
 ....................................................................*)
 
-let threes = fun () -> failwith "threes not implemented" ;;
+let threes = smap2 (+) ones twos ;;
   
 (*....................................................................
 Exercise 3. An infinite stream of natural numbers (0, 1, 2, 3, ...).
 ....................................................................*)
 
-let nats = fun () -> failwith "nats not implemented" ;;
+let rec nats = fun () -> Cons (0, smap ((+) 1) nats ;;
 
 (*....................................................................
 Exercise 4. Create a function zip_stream, which takes two streams and
@@ -90,7 +90,8 @@ twos (2,2,2,2....) would look like this:
    -: int list = [1; 2; 1; 2; 1; 2]
 ....................................................................*)
 
-let zip_stream = fun _ -> failwith "zip_stream not implemented";;
+let rec zip_stream s1 s2 =
+  fun () -> Cons (head s1, fun () -> Cons (head s2, zip_stream (tail s1) (tail s2)) ;;
 
 (* Now some new examples. For these, you should build them from
 previous streams (ones, twos, threes, nats) by making use of the
@@ -101,8 +102,8 @@ Exercise 5. Generate two infinite streams, one of the even natural
 numbers, and one of the odds.
 ....................................................................*)
 
-let evens _ = failwith "evens not implemented" ;;
-let odds _ = failwith "odds not implemented" ;;
+let evens = smap (( * ) 2) nats ;;
+let odds = smap (fun x = x - 1) evens ;;
 
 (* In addition to mapping over streams, we should be able to use all
 the other higher-order list functions you've grown to know and love,
@@ -123,15 +124,16 @@ filtering the natural numbers for the evens:
 Now define sfilter.
 ....................................................................*)
 
-let sfilter _ = failwith "sfilter not implemented" ;;
+let sfilter f s1 = if (f (head s1)) then (fun () -> Cons (s1, f (tail s1)))
+                   else sfilter f (tail s1) ;;
   
 (*....................................................................
 Exercise 7. Now redefine evens and odds (as evens2 and odds2) using
 sfilter. 
 ....................................................................*)
 
-let evens2 _ = failwith "evens with sfilter not implemented" ;;
-let odds2 _ = failwith "odds with sfilter not implemented" ;;
+let evens2 = sfilter (fun x -> x mod 2 = 0) nats ;;
+let odds2 = sfilter (fun x -> x mod 2 = 1) nats ;;
 
 (*====================================================================
 Part 2: Eratosthenes' Sieve
